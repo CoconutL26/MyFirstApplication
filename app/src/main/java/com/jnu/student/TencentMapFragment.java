@@ -1,5 +1,6 @@
 package com.jnu.student;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.jnu.student.data.ShopDownLoader;
+import com.jnu.student.data.ShopLocation;
 import com.tencent.tencentmap.mapsdk.maps.CameraUpdate;
 import com.tencent.tencentmap.mapsdk.maps.CameraUpdateFactory;
 import com.tencent.tencentmap.mapsdk.maps.MapView;
@@ -15,6 +18,8 @@ import com.tencent.tencentmap.mapsdk.maps.model.CameraPosition;
 import com.tencent.tencentmap.mapsdk.maps.model.LatLng;
 import com.tencent.tencentmap.mapsdk.maps.model.Marker;
 import com.tencent.tencentmap.mapsdk.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class TencentMapFragment extends Fragment {
 
@@ -30,12 +35,37 @@ public class TencentMapFragment extends Fragment {
         }
     }
     private com.tencent.tencentmap.mapsdk.maps.MapView mapView = null;
+    public class DataDownloadTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return new ShopDownLoader().download(urls[0]);
+        }
+        @Override
+        protected void onPostExecute(String responseData) {
+            super.onPostExecute(responseData);
+            if (responseData != null) {
+                ArrayList<ShopLocation> shopLocations= new ShopDownLoader().parseJsonObjects(responseData);
+                TencentMap tencentMap = mapView.getMap();
+                for (ShopLocation shopLocation : shopLocations) {
+                    LatLng point1 = new LatLng(shopLocation.getLatitude(), shopLocation.getLongitude());
+                    MarkerOptions markerOptions = new MarkerOptions(point1)
+                            .title(shopLocation.getName());
+                    Marker marker = tencentMap.addMarker(markerOptions);
+
+
+                }
+            }
+        }
+    }
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_tencent_map, container, false);
         mapView = rootView.findViewById(R.id.mapView);
+
+        new DataDownloadTask().execute("http://file.nidama.net/class/mobile_develop/data/bookstore2023.json");
 
         TencentMap tencentMap = mapView.getMap();
 
