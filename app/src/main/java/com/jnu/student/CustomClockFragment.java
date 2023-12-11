@@ -40,7 +40,7 @@ public class CustomClockFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_custom_clock, container, false);
         customClockView = view.findViewById(R.id.clockView);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_custom_clock, container, false);
+        return view;
     }
     @Override
     public void onResume() {
