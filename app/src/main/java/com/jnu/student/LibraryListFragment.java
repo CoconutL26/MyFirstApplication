@@ -193,7 +193,7 @@ public class LibraryListFragment extends Fragment {
             public void onCreateContextMenu(ContextMenu contextMenu, View view
                     , ContextMenu.ContextMenuInfo contextMenuInfo) {
                 contextMenu.add(0,MENU_ID_ADD,getAdapterPosition(),"添加 ");
-                contextMenu.add(0,MENU_ID_UPDATE,getAdapterPosition(),"修改");
+                contextMenu.add(0,MENU_ID_UPDATE,getAdapterPosition(),"修改 ");
                 contextMenu.add(0,MENU_ID_DELETE,getAdapterPosition(),"删除 ");
             }
         }

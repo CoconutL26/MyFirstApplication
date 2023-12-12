@@ -24,7 +24,7 @@ public class AddBook extends AppCompatActivity {
         position= this.getIntent().getIntExtra("position",0);
         String title=this.getIntent().getStringExtra("title");
         // 初始化其他书籍信息的EditText
-        EditText editTextTitle=findViewById(R.id.editText);
+        EditText editTextTitle=findViewById(R.id.editText_add);
 //        coverImageView = findViewById(R.id.image_cover);
 //        titleEditText = findViewById(R.id.editText);
         if(null!=title)

@@ -20,7 +20,7 @@ public class EditBook extends AppCompatActivity {
         setContentView(R.layout.edit_book_layout);
 
         coverImageView = findViewById(R.id.image_cover);
-        titleEditText = findViewById(R.id.editText);
+        titleEditText = findViewById(R.id.editText_update);
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("id",0);
